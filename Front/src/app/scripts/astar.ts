@@ -32,6 +32,8 @@ export class Astar{
             }
             let current: Spot = this.openSet[winner];
 
+            this.path.forEach(cell => {
+            });
             this.path = [];
             let temp = current;
             this.path.push(temp);
@@ -45,7 +47,6 @@ export class Astar{
             });
 
             if (current.equals(this.end)){
-                console.log(this.path_length)
                 return this.path;
             }
 
@@ -59,7 +60,7 @@ export class Astar{
             let neighbors = current.neighbors;
             neighbors.forEach(neighbor => {
                 if (!this.closedSet.includes(neighbor) && neighbor.isThrough(this.path.length)){
-                    let tempG = current.g + 1;
+                    let tempG = current.g;
                     let newPath = false;
 
                     if (this.openSet.includes(neighbor)){
@@ -75,7 +76,8 @@ export class Astar{
 
                     if (newPath){
                         neighbor.h = this.heuristic(neighbor, this.end);
-                        neighbor.f = neighbor.g + neighbor.h + neighbor.speed;
+                        neighbor.g = neighbor.speed + neighbor.g;
+                        neighbor.f = neighbor.g + neighbor.h;
                         neighbor.previous = current;
                     }
                 }
@@ -84,8 +86,9 @@ export class Astar{
         return null;
     }
 
-    public heuristic(a: Spot, b: Spot): number{
+    private heuristic(a: Spot, b: Spot): number{
         return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
     }
 
 }
+

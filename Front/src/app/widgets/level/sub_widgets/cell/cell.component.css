@@ -1,6 +1,4 @@
 .cell{
-    width: calc(min(95vh, 95vw) / 15);
-    height: calc(min(95vh, 95vw) / 15);
     border-top: 1px solid black;
     border-left: 1px solid black;
 }

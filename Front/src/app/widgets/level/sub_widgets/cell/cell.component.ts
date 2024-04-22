@@ -10,4 +10,5 @@ import { Component, Input } from '@angular/core';
 export class CellComponent {
   @Input({ required: true }) image: string = '';
   @Input({ required: true }) name: string = 'no data';
+  @Input({required: true}) cellSize: string = '10px';
 }

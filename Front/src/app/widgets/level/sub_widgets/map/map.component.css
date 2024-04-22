@@ -3,6 +3,6 @@
     grid-template-columns: repeat(15, 1fr); /* Crée 15 colonnes de largeur égale */
     grid-template-rows: repeat(15, 1fr); /* Crée 15 lignes de hauteur égale */
     gap: 0;
-    width: min(95vh, 95vw);
-    height: min(95vh, 95vw);
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
 }

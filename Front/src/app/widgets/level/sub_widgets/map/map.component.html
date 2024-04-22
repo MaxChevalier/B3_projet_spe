@@ -1,3 +1,7 @@
-<div class="map">
-    <app-cell [image]="cell['image']" [name]="cell['name']" *ngFor="let cell of cells" />
+<div class="map" (click)="findPath()">
+    <ng-container *ngFor="let innerArray of cells">
+        <ng-container *ngFor="let cell of innerArray">
+            <app-cell [image]="cell['image']" [name]="cell['name']" [cellSize]="cellSize"></app-cell>
+        </ng-container>
+    </ng-container>
 </div>

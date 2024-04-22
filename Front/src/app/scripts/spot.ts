@@ -9,9 +9,11 @@ export class Spot{
     neighbors : Array<Spot>;
     through : Array<boolean>;
     speed : number;
+    image: string;
+    name: string;
 
 
-    constructor(x: number, y: number, through: Array<boolean>, speed: number, teleport: Spot|null = null){
+    constructor(x: number, y: number, through: Array<boolean>, speed: number, image: string, name: string){
         this.x = x;
         this.y = y;
         this.f = 0;
@@ -21,6 +23,8 @@ export class Spot{
         this.neighbors = [];
         this.through = through;
         this.speed = speed;
+        this.image = image;
+        this.name = name;
     }
 
     public addNeighbors(spots: Array<Array<Spot>>){
