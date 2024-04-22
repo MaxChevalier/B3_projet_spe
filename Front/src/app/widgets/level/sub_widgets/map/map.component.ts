@@ -13,9 +13,11 @@ import { CellComponent } from '../cell/cell.component';
     styleUrl: './map.component.css'
 })
 export class MapComponent {
-    cells: Array<any> = []
+    cells: Array<any>;
+    hero: any;
 
     constructor() {
+        this.hero = { "image": "assets/sprites/cat/sleep.gif", "name": "cat" };
         const W = { "image": "assets/sprites/wall.png", "name": "wall" };
         const F = { "image": "assets/sprites/grass.png", "name": "floor" };
         const A = { "image": "assets/sprites/water.png", "name": "water" };
