@@ -36,20 +36,23 @@ export class RegisterComponent {
       this.errorMessage = 'Les mots de passe ne correspondent pas.';
       return;
     }
-    console.log('Inscription en cours...');
     this.authService.register({ name: this.formulaire.value.name, email: this.formulaire.value.email, password: this.formulaire.value.password })
-    .subscribe({
-      next: () => {
-        this.router.navigate(['/home']);
-      },
-      error: (error) => {
-        if (error.status === 409) {
-          this.errorMessage = 'Cette adresse e-mail est déjà utilisée.';
-        } else {
-          this.errorMessage = 'Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer.';
-          console.error('Erreur lors de l\'inscription :', error);
+      .subscribe({
+        next: (response) => {
+          if (response && response.error) {
+            this.errorMessage = response.error.message;
+          } else {
+            this.router.navigate(['/home']);
+          }
+        },
+        error: (error) => {
+          if (error.status === 409) {
+            this.errorMessage = 'Cette adresse e-mail est déjà utilisée.';
+          } else {
+            this.errorMessage = 'Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer.';
+            console.error('Erreur lors de l\'inscription :', error);
+          }
         }
-      }
-    });
+      });
   }
 }

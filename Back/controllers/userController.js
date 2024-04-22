@@ -48,7 +48,8 @@ async function addUser(req, res) {
     }
     const hashedPassword = await hashPassword(password);
     const newUser = await User.create({ name, email, password: hashedPassword });
-    res.send('Utilisateur ajouté avec succès !');
+    const token = generateToken(newUser);
+    res.json({ token });
   } catch (error) {
     console.error('Erreur lors de l\'ajout de l\'utilisateur :', error);
     res.status(500).send('Erreur serveur lors de l\'ajout de l\'utilisateur');
@@ -90,9 +91,10 @@ async function deleteUser(req, res) {
 async function login(req, res) {
   const { email, password } = req.body;
   try {
-      const user = await User.findOne({ where: { email } });
+    console.log(email);
+    const user = await User.findOne({ where: { email } });
       if (!user) {
-          return res.status(404).send('Utilisateur non trouvé');
+          return res.status(401).send('Utilisateur non trouvé');
       }
       const isPasswordValid = await comparePasswords(password, user.password);
       const token = generateToken(user);
