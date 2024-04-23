@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CellComponent } from '../cell/cell.component';
 import { Spot } from '../../../../scripts/spot';
 import { Astar } from '../../../../scripts/astar';
+import { Cell } from '../../../../interfaces/cell';
 
 @Component({
     selector: 'app-map',
@@ -15,59 +16,35 @@ import { Astar } from '../../../../scripts/astar';
     styleUrl: './map.component.css'
 })
 export class MapComponent {
-    cells: Array<Array<any>>;
+    cells: Array<Array<Spot>> = [];
     hero: any;
-    start: Spot;
-    end: Spot;
+    start: Spot | null = null;
+    end: Spot | null = null;
 
+    @Input({required: true}) defaultCell: Cell = {image: "", name: "", through: [false], speed: 0 } as Cell;
     @Input({required: true}) cellSize: string = '10px';
+    @Input({required: true}) cellDrag: {cell: Cell, id: {X: number, Y: number} | {I: number} } | null = null;
 
     @Output() getPath: EventEmitter<Array<Spot>| null> = new EventEmitter();
     @Output() getStart: EventEmitter<Spot> = new EventEmitter();
+    @Output() dropped: EventEmitter<{cell: Cell, id: {X: number, Y: number} | {I: number}, clear: boolean } | {X: number, Y: number} | {I: number}> = new EventEmitter();
 
-    constructor() {
-        const W = { "image": "assets/sprites/wall.png", "name": "wall", "through": [false], "speed": 0 };
-        const F = { "image": "assets/sprites/grass.png", "name": "floor", "through": [true], "speed": 1 };
-        const A = { "image": "assets/sprites/water.png", "name": "water", "through": [true], "speed": 2 };
-        const S = { "image": "assets/sprites/squid.png", "name": "squid", "through": [true], "speed": 3 };
-        const P = { "image": "assets/sprites/spike_on.png", "name": "spike_on", "through": [false, true], "speed": 1 };
-        const O = { "image": "assets/sprites/spike_off.png", "name": "spike_off", "through": [true, false], "speed": 1 };
-        const B = { "image": "assets/sprites/bed.png", "name": "bed", "through": [true], "speed": 1 };
-        const G = { "image": "assets/sprites/food.png", "name": "food", "through": [true], "speed": 1 };
+    ngOnInit() {
+        console.log(this.defaultCell);
 
-        this.cells = [
-            [F, W, B, W, F, W, W, W, F, F, F, W, F, W, F],
-            [P, W, F, F, F, F, F, F, F, W, F, W, F, W, A],
-            [F, F, S, W, W, W, F, W, W, W, F, W, O, W, A],
-            [A, W, F, W, F, W, F, W, A, A, F, F, F, S, A],
-            [W, W, F, F, F, W, A, W, A, W, W, W, F, W, W],
-            [F, W, P, W, F, W, A, W, A, F, F, F, F, P, F],
-            [F, F, F, W, F, W, W, W, F, W, F, W, F, W, F],
-            [W, W, W, W, O, W, F, F, F, W, F, W, F, W, F],
-            [F, W, F, F, F, W, F, W, W, W, F, W, F, W, W],
-            [F, W, W, W, F, F, F, W, S, A, A, W, S, S, F],
-            [F, S, F, W, F, W, W, W, A, W, W, W, F, W, F],
-            [W, W, F, W, F, F, F, W, F, W, P, W, F, W, F],
-            [A, W, F, W, F, W, A, F, F, F, F, W, W, W, F],
-            [A, W, O, W, P, A, S, W, W, W, F, F, F, W, F],
-            [A, A, F, F, F, W, F, W, G, F, F, W, F, F, F],
-        ]
-
-        for (let i = 0; i < this.cells.length; i++) {
-            for (let j = 0; j < this.cells[i].length; j++) {
-                this.cells[i][j] = new Spot(i, j, this.cells[i][j].through, this.cells[i][j].speed, this.cells[i][j].image, this.cells[i][j].name);
+        this.cells = new Array(15);
+        for (let i = 0; i < 15; i++) {
+            this.cells[i] = new Array(15);
+            for (let j = 0; j < 15; j++) {
+                this.cells[i][j] = new Spot(i, j, this.defaultCell);
             }
         }
-
-        this.start = this.cells[0][2];
-        this.end = this.cells[14][8];
-    }
-
-    ngAfterViewInit() {
-        this.setStart();
     }
 
     findPath() {
+        if (this.start == null || this.end == null) {
+            return;
+        }
         let astar = new Astar(this.cells, this.start, this.end);
         let path = astar.findPath();
         if (path != null) {
@@ -76,7 +53,44 @@ export class MapComponent {
         this.getPath.emit(path);
     }
 
-    setStart() {
-        this.getStart.emit(this.start);
+    dragOver(event: any) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    drop(event: any, X: number, Y: number) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (this.cellDrag == null) {
+            return;
+        }
+
+        let tmpCell : Cell = this.cells[X][Y].cell;
+        this.changeCell(X, Y, this.cellDrag.cell);
+        if ('X' in this.cellDrag.id) {
+            this.changeCell(this.cellDrag.id.X, this.cellDrag.id.Y, tmpCell);
+        }
+
+        this.dropped.emit({'cell' : tmpCell, 'id' : {X: X, Y: Y}, clear: true});
+    }
+
+    changeCell(X: number, Y: number, cell: Cell) {
+        this.cells[X][Y].cell = cell;
+        if (cell.name == "start") {
+            this.start = this.cells[X][Y];
+            this.getStart.emit(this.start);
+        }
+        else if (cell.name == "end") {
+            this.end = this.cells[X][Y];
+        }
+    }
+
+    cellDragId(event: {X: number, Y: number} | {I: number}) {
+        if ('I' in event) {
+            this.dropped.emit({'cell' : this.cells[event.I][0].cell, 'id' : event, clear: false});
+        }
+        else {
+            this.dropped.emit({'cell' : this.cells[event.X][event.Y].cell, 'id' : event, clear: false});
+        }
     }
 }

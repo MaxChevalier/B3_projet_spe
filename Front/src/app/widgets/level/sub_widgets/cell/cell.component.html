@@ -1,3 +1,4 @@
-<div class="cell" [style]="'width: ' + cellSize + '; height: ' + cellSize + ';'">
+<div class="cell" [style]="'width: ' + cellSize + '; height: ' + cellSize + ';'"
+draggable="true" (dragstart)="dragStart($event)" (dragover)="dragOver($event)" >
     <img class="cell-sprite" [src]="image" [alt]="name" />
 </div>

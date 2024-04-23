@@ -43,7 +43,7 @@ export class Astar{
             }
             this.path_length = 0;
             this.path.forEach(cell => {
-                this.path_length += cell.speed;
+                this.path_length += cell.cell.speed;
             });
 
             if (current.equals(this.end)){
@@ -76,7 +76,7 @@ export class Astar{
 
                     if (newPath){
                         neighbor.h = this.heuristic(neighbor, this.end);
-                        neighbor.g = neighbor.speed + neighbor.g;
+                        neighbor.g = neighbor.cell.speed + neighbor.g;
                         neighbor.f = neighbor.g + neighbor.h;
                         neighbor.previous = current;
                     }

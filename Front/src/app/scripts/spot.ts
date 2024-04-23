@@ -1,3 +1,4 @@
+import { Cell } from "../interfaces/cell";
 
 export class Spot{
     x : number;
@@ -7,13 +8,14 @@ export class Spot{
     h : number;
     previous : Spot|null;
     neighbors : Array<Spot>;
-    through : Array<boolean>;
-    speed : number;
-    image: string;
-    name: string;
+    // through : Array<boolean>;
+    // speed : number;
+    // image: string;
+    // name: string;
+    cell: Cell;
 
 
-    constructor(x: number, y: number, through: Array<boolean>, speed: number, image: string, name: string){
+    constructor(x: number, y: number, cell: Cell){
         this.x = x;
         this.y = y;
         this.f = 0;
@@ -21,10 +23,7 @@ export class Spot{
         this.h = 0;
         this.previous = null;
         this.neighbors = [];
-        this.through = through;
-        this.speed = speed;
-        this.image = image;
-        this.name = name;
+        this.cell = cell;
     }
 
     public addNeighbors(spots: Array<Array<Spot>>){
@@ -47,7 +46,7 @@ export class Spot{
     }
 
     public isThrough(turn: number): boolean{
-        return this.through[turn % this.through.length];
+        return this.cell.through[turn % this.cell.through.length];
     }
 
 }

@@ -1,7 +1,10 @@
 <div class="level">
+    <div class="level-sub">
+        <app-cell-selector [cellSize]="cellSize" [cellsType]="cellsType" (cellDragId)="setCellDrag($event)" (cellDrop)="stockTiles($event)"/>
+    </div>
     <div class="level-map level-sub">
-        <app-hero [heroSpeed]="heroSpeed" [cellSize]="cellSize"></app-hero>
-        <app-map (getPath)="getPath($event)" (getStart)="setStart($event)" [cellSize]="cellSize"></app-map>
+        <app-hero [heroSpeed]="heroSpeed" [cellSize]="cellSize" />
+        <app-map (getPath)="getPath($event)" (getStart)="setStart($event)" [cellSize]="cellSize" [cellDrag]="cellDrag" [defaultCell]="defaultCell" (dropped)="setCellDrag($event)"/>
     </div>
     <span class="level-sub level-info">
         {{turns}}

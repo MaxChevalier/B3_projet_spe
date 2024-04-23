@@ -1,7 +1,8 @@
 <div class="map" (click)="findPath()">
-    <ng-container *ngFor="let innerArray of cells">
-        <ng-container *ngFor="let cell of innerArray">
-            <app-cell [image]="cell['image']" [name]="cell['name']" [cellSize]="cellSize"></app-cell>
-        </ng-container>
+    <ng-container *ngFor="let innerArray of cells; let X = index">
+        <div *ngFor="let cell of innerArray; let Y = index" (dragover)="dragOver($event)" (drop)="drop($event,X,Y)">
+            <app-cell [image]="cell.cell.image" [name]="cell.cell.name" [cellSize]="cellSize" [id]="{'X': X, 'Y': Y}"
+                (cellDragId)="cellDragId($event)"></app-cell>
+        </div>
     </ng-container>
 </div>
