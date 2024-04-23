@@ -1,0 +1,18 @@
+<div class="home-container">
+    <h2>Bienvenue sur la page de création</h2>
+    <div class="buttons-container">
+      <button (click)="addLevel()">Créer un niveau</button>
+      <button (click)="openLevel()">Ouvrir un niveau</button>
+    </div>
+    <div class="profile-link">
+      <a routerLink="/user-profile">
+        <img src="https://github.com/MaxChevalier/B3_projet_spe/blob/feat/frontUser/Front/src/app/home/home/profileIcon.png" alt="Profil utilisateur"/>
+      </a>
+    </div>
+    <div class="logout-button">
+      <button (click)="logout()">Déconnexion</button>
+    <div class="list-button">
+      <button (click)="Guid()">Liste des éléments</button>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
