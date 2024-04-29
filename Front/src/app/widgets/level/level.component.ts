@@ -4,11 +4,14 @@ import { HeroComponent } from './sub_widgets/hero/hero.component';
 import { Spot } from '../../scripts/spot';
 import { CellSelectorComponent } from './sub_widgets/cell-selector/cell-selector.component';
 import { Cell } from '../../interfaces/cell';
+import { NgIf } from '@angular/common';
+import { set } from 'mongoose';
 
 @Component({
 	selector: 'app-level',
 	standalone: true,
 	imports: [
+		NgIf,
 		MapComponent,
 		HeroComponent,
 		CellSelectorComponent,
@@ -64,11 +67,8 @@ export class LevelComponent {
 	}
 
 	setStart(start: Spot) {
-		let tmpSpeed = this.heroSpeed;
-		this.heroSpeed = 0;
-		this.heroComponent?.moveTo(start.y, start.x);
+		this.heroComponent?.moveTo(start.y, start.x, 0);
 		this.heroComponent?.updateAnimation('sleep');
-		this.heroSpeed = tmpSpeed;
 	}
 
 	setCellDrag( event: {cell: Cell, id: {X: number, Y: number} | {I: number}, clear: boolean } | {X: number, Y: number} | {I: number}) {
@@ -78,6 +78,10 @@ export class LevelComponent {
 				this.cellsType.forEach((cellType, index) => {
 					if (cellType.cell.name == event.cell.name) {
 						this.cellsType[index].nb++;
+						
+						if (cellType.cell.name == 'start' && this.mapComponent){
+							this.mapComponent.start = null;
+						}
 					}
 				});
 			}
@@ -96,6 +100,9 @@ export class LevelComponent {
 			this.cellsType.forEach((cellType, index) => {
 				if (cellType.cell.name == this.cellDrag!.cell.name) {
 					this.cellsType[index].nb++;
+					if (this.cellDrag!.cell.name == 'start' && this.mapComponent){
+						this.mapComponent.start = null;
+					}
 				}
 			});
 			this.mapComponent?.changeCell(this.cellDrag.id.X, this.cellDrag.id.Y, this.defaultCell);

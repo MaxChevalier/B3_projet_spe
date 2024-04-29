@@ -18,7 +18,7 @@ import { Cell } from '../../../../interfaces/cell';
 export class MapComponent {
     cells: Array<Array<Spot>> = [];
     hero: any;
-    start: Spot | null = null;
+    public start: Spot | null = null;
     end: Spot | null = null;
 
     @Input({required: true}) defaultCell: Cell = {image: "", name: "", through: [false], speed: 0 } as Cell;

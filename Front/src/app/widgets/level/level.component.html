@@ -3,7 +3,7 @@
         <app-cell-selector [cellSize]="cellSize" [cellsType]="cellsType" (cellDragId)="setCellDrag($event)" (cellDrop)="stockTiles($event)"/>
     </div>
     <div class="level-map level-sub">
-        <app-hero [heroSpeed]="heroSpeed" [cellSize]="cellSize" />
+        <app-hero [heroSpeed]="heroSpeed" [cellSize]="cellSize" [hidden]="!(this.mapComponent && this.mapComponent!.start != null)"/>
         <app-map (getPath)="getPath($event)" (getStart)="setStart($event)" [cellSize]="cellSize" [cellDrag]="cellDrag" [defaultCell]="defaultCell" (dropped)="setCellDrag($event)" [mapSize]="{X: 10, Y: 10}"/>
     </div>
     <span class="level-sub level-info">
