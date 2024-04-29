@@ -14,7 +14,7 @@ export class HeroComponent {
   currentCoordinates: {x: number, y: number};
   flip: string;
   
-  @Input({ required: true }) heroSpeed: number = 500;
+  @Input({ required: true }) heroSpeed: number = 250;
   @Input({required: true}) cellSize: string = '10px';
 
   constructor() {
@@ -24,11 +24,11 @@ export class HeroComponent {
     this.flip = '';
   }
 
-  public moveTo(X: number, Y: number) {
+  public moveTo(X: number, Y: number, speed: number = 1) {
     this.updateAnimation('walk');
     let top = `calc(${Y} * calc(${this.cellSize} + 1px) + 10px)`;
     let left = `calc(${X} * calc(${this.cellSize} + 1px) + 10px)`;
-    this.css = `top: ${top}; left: ${left};`;
+    this.css = `top: ${top}; left: ${left};transition : linear ${this.heroSpeed * speed}ms;`;
     if (this.currentCoordinates.x < X) {
       this.flip = 'transform: scaleX(1);';
     } else if (this.currentCoordinates.x > X) {

@@ -24,6 +24,7 @@ export class MapComponent {
     @Input({required: true}) defaultCell: Cell = {image: "", name: "", through: [false], speed: 0 } as Cell;
     @Input({required: true}) cellSize: string = '10px';
     @Input({required: true}) cellDrag: {cell: Cell, id: {X: number, Y: number} | {I: number} } | null = null;
+    @Input({required: false}) mapSize: {X: number, Y: number} = {X: 15, Y: 15};
 
     @Output() getPath: EventEmitter<Array<Spot>| null> = new EventEmitter();
     @Output() getStart: EventEmitter<Spot> = new EventEmitter();
@@ -32,10 +33,10 @@ export class MapComponent {
     ngOnInit() {
         console.log(this.defaultCell);
 
-        this.cells = new Array(15);
-        for (let i = 0; i < 15; i++) {
-            this.cells[i] = new Array(15);
-            for (let j = 0; j < 15; j++) {
+        this.cells = new Array(this.mapSize.X);
+        for (let i = 0; i < this.mapSize.X; i++) {
+            this.cells[i] = new Array(this.mapSize.Y);
+            for (let j = 0; j < this.mapSize.Y; j++) {
                 this.cells[i][j] = new Spot(i, j, this.defaultCell);
             }
         }

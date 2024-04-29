@@ -22,16 +22,16 @@ export class LevelComponent {
 	turns: number = 0;
 	cellSize : string = 'calc(min(calc(95vh - 28px), calc(95vw - 28px)) / 15)'
 	cellsType: Array<{cell: Cell, nb: number}> = [
-		{nb: 10, cell: { image: "assets/sprites/wall.png", name: "wall", through: [false], speed: 0 } as Cell},
-		{nb: 10, cell: { image: "assets/sprites/water.png", name: "water", through: [true], speed: 2 } as Cell},
-		{nb: 10, cell: { image: "assets/sprites/squid.png", name: "squid", through: [true], speed: 3 } as Cell},
-		{nb: 10, cell: { image: "assets/sprites/spike_on.png", name: "spike_on", through: [false, true], "speed": 1 } as Cell},
-		{nb: 10, cell: { image: "assets/sprites/spike_off.png", name: "spike_off", through: [true, false], "speed": 1 } as Cell},
-		{nb: 1, cell: { image: "assets/sprites/bed.png", name: "start", through: [true], speed: 1 } as Cell},
-		{nb: 1, cell: { image: "assets/sprites/food.png", name: "end", through: [true], speed: 1 } as Cell},
+		{nb: 1, cell: { image: "assets/sprites/cat_pack/start.png", name: "start", through: [true], speed: 1 } as Cell},
+		{nb: 1, cell: { image: "assets/sprites/cat_pack/end.png", name: "end", through: [true], speed: 1 } as Cell},
+		{nb: 10, cell: { image: "assets/sprites/cat_pack/wall.png", name: "wall", through: [false], speed: 0 } as Cell},
+		{nb: 10, cell: { image: "assets/sprites/cat_pack/slow1.png", name: "water", through: [true], speed: 2 } as Cell},
+		{nb: 10, cell: { image: "assets/sprites/cat_pack/slow2.png", name: "squid", through: [true], speed: 3 } as Cell},
+		{nb: 10, cell: { image: "assets/sprites/cat_pack/wall_switch_on.png", name: "spike_on", through: [false, true], "speed": 1 } as Cell},
+		{nb: 10, cell: { image: "assets/sprites/cat_pack/wall_switch_off.png", name: "spike_off", through: [true, false], "speed": 1 } as Cell},
 	  ];
 	cellDrag: {cell: Cell, id: {X: number, Y: number} | {I: number} } | null = null;
-	defaultCell: Cell  = {image: "assets/sprites/grass.png", name: "floor", through: [true], speed: 1 } as Cell;
+	defaultCell: Cell  = {image: "assets/sprites/cat_pack/floor.png", name: "floor", through: [true], speed: 1 } as Cell;
 
 	@ViewChild(HeroComponent) heroComponent: HeroComponent | undefined;
 	@ViewChild(MapComponent) mapComponent: MapComponent | undefined;
@@ -47,7 +47,7 @@ export class LevelComponent {
 			path.shift();
 			path.forEach(spot => {
 				setTimeout(() => {
-					this.heroComponent?.moveTo(spot.y, spot.x);
+					this.heroComponent?.moveTo(spot.y, spot.x, spot.cell.speed);
 				}, this.heroSpeed * index);
 				for (let i = 0; i < spot.cell.speed; i++) {
 					setTimeout(() => {

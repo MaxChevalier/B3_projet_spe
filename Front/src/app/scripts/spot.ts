@@ -8,10 +8,6 @@ export class Spot{
     h : number;
     previous : Spot|null;
     neighbors : Array<Spot>;
-    // through : Array<boolean>;
-    // speed : number;
-    // image: string;
-    // name: string;
     cell: Cell;
 
 
