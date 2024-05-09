@@ -30,6 +30,7 @@ export class Astar{
                     winner = i;
                 }
             }
+            console.log("openSet: ", this.openSet, "winner: ", winner);
             let current: Spot = this.openSet[winner];
 
             this.path = [];
