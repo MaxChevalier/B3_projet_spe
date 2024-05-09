@@ -41,10 +41,6 @@ export class LevelComponent {
 	@ViewChild(HeroComponent) heroComponent: HeroComponent | undefined;
 	@ViewChild(MapComponent) mapComponent: MapComponent | undefined;
 
-	constructor() {
-		console.log(Object.keys(this.timeouts).length);
-	}
-
 	async getPath(path: Array<Spot> | null | undefined) {
 		if (path == null || path == undefined) {
 			console.log('No path found');
