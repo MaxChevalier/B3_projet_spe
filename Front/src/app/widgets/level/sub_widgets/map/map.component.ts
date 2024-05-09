@@ -21,18 +21,16 @@ export class MapComponent {
     public start: Spot | null = null;
     end: Spot | null = null;
 
-    @Input({required: true}) defaultCell: Cell = {image: "", name: "", through: [false], speed: 0 } as Cell;
+    @Input({required: true}) defaultCell: Cell = {image: [""], name: "", through: [false], speed: 0 } as Cell;
     @Input({required: true}) cellSize: string = '10px';
     @Input({required: true}) cellDrag: {cell: Cell, id: {X: number, Y: number} | {I: number} } | null = null;
     @Input({required: false}) mapSize: {X: number, Y: number} = {X: 15, Y: 15};
+    @Input({required: true}) turns: number = 0;
 
-    @Output() getPath: EventEmitter<Array<Spot>| null> = new EventEmitter();
     @Output() getStart: EventEmitter<Spot> = new EventEmitter();
     @Output() dropped: EventEmitter<{cell: Cell, id: {X: number, Y: number} | {I: number}, clear: boolean } | {X: number, Y: number} | {I: number}> = new EventEmitter();
 
     ngOnInit() {
-        console.log(this.defaultCell);
-
         this.cells = new Array(this.mapSize.X);
         for (let i = 0; i < this.mapSize.X; i++) {
             this.cells[i] = new Array(this.mapSize.Y);
@@ -42,16 +40,16 @@ export class MapComponent {
         }
     }
 
-    findPath() {
+    findPath(): Spot[] | null{
         if (this.start == null || this.end == null) {
-            return;
+            return null;
         }
         let astar = new Astar(this.cells, this.start, this.end);
         let path = astar.findPath();
         if (path != null) {
             path = path.reverse();
         }
-        this.getPath.emit(path);
+        return path;
     }
 
     dragOver(event: any) {

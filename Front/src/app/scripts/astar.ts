@@ -59,7 +59,7 @@ export class Astar{
 
             let neighbors = current.neighbors;
             neighbors.forEach(neighbor => {
-                if (!this.closedSet.includes(neighbor) && neighbor.isThrough(this.path.length)){
+                if (!this.closedSet.includes(neighbor) && neighbor.isThrough(this.path_length)){
                     let tempG = current.g;
                     let newPath = false;
 

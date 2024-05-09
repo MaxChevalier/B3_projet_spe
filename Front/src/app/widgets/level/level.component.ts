@@ -4,8 +4,7 @@ import { HeroComponent } from './sub_widgets/hero/hero.component';
 import { Spot } from '../../scripts/spot';
 import { CellSelectorComponent } from './sub_widgets/cell-selector/cell-selector.component';
 import { Cell } from '../../interfaces/cell';
-import { NgIf } from '@angular/common';
-import { set } from 'mongoose';
+import { NgIf, CommonModule } from '@angular/common';
 
 @Component({
 	selector: 'app-level',
@@ -15,32 +14,39 @@ import { set } from 'mongoose';
 		MapComponent,
 		HeroComponent,
 		CellSelectorComponent,
+		CommonModule,
 	],
 	templateUrl: './level.component.html',
 	styleUrl: './level.component.css'
 })
 export class LevelComponent {
 
-	heroSpeed : number = 250;
+	heroSpeed: number = 250;
 	turns: number = 0;
-	cellSize : string = 'calc(min(calc(95vh - 28px), calc(95vw - 28px)) / 15)'
-	cellsType: Array<{cell: Cell, nb: number}> = [
-		{nb: 1, cell: { image: "assets/sprites/cat_pack/start.png", name: "start", through: [true], speed: 1 } as Cell},
-		{nb: 1, cell: { image: "assets/sprites/cat_pack/end.png", name: "end", through: [true], speed: 1 } as Cell},
-		{nb: 10, cell: { image: "assets/sprites/cat_pack/wall.png", name: "wall", through: [false], speed: 0 } as Cell},
-		{nb: 10, cell: { image: "assets/sprites/cat_pack/slow1.png", name: "water", through: [true], speed: 2 } as Cell},
-		{nb: 10, cell: { image: "assets/sprites/cat_pack/slow2.png", name: "squid", through: [true], speed: 3 } as Cell},
-		{nb: 10, cell: { image: "assets/sprites/cat_pack/wall_switch_on.png", name: "spike_on", through: [false, true], "speed": 1 } as Cell},
-		{nb: 10, cell: { image: "assets/sprites/cat_pack/wall_switch_off.png", name: "spike_off", through: [true, false], "speed": 1 } as Cell},
-	  ];
-	cellDrag: {cell: Cell, id: {X: number, Y: number} | {I: number} } | null = null;
-	defaultCell: Cell  = {image: "assets/sprites/cat_pack/floor.png", name: "floor", through: [true], speed: 1 } as Cell;
+	cellSize: string = 'calc(min(calc(95vh - 28px), calc(95vw - 28px)) / 15)'
+	cellsType: Array<{ cell: Cell, nb: number }> = [
+		{ nb: 1, cell: { image: ["assets/sprites/cat_pack/start.png"], name: "start", through: [true], speed: 1 } as Cell },
+		{ nb: 1, cell: { image: ["assets/sprites/cat_pack/end.png"], name: "end", through: [true], speed: 1 } as Cell },
+		{ nb: 10, cell: { image: ["assets/sprites/cat_pack/wall.png"], name: "wall", through: [false], speed: 0 } as Cell },
+		{ nb: 10, cell: { image: ["assets/sprites/cat_pack/slow1.png"], name: "water", through: [true], speed: 2 } as Cell },
+		{ nb: 10, cell: { image: ["assets/sprites/cat_pack/slow2.png"], name: "squid", through: [true], speed: 3 } as Cell },
+		{ nb: 10, cell: { image: ["assets/sprites/cat_pack/wall_switch_on.png", "assets/sprites/cat_pack/wall_switch_off.png"], name: "spike_on", through: [false, true], "speed": 1 } as Cell },
+		{ nb: 10, cell: { image: ["assets/sprites/cat_pack/wall_switch_off.png", "assets/sprites/cat_pack/wall_switch_on.png"], name: "spike_off", through: [true, false], "speed": 1 } as Cell },
+	];
+	cellDrag: { cell: Cell, id: { X: number, Y: number } | { I: number } } | null = null;
+	defaultCell: Cell = { image: ["assets/sprites/cat_pack/floor.png"], name: "floor", through: [true], speed: 1 } as Cell;
+	start: Spot | null = null;
+	timeouts: { [key: number]: any } = {};
 
 	@ViewChild(HeroComponent) heroComponent: HeroComponent | undefined;
 	@ViewChild(MapComponent) mapComponent: MapComponent | undefined;
 
-	async getPath(path: Array<Spot> | null) {
-		if (path == null) {
+	constructor() {
+		console.log(Object.keys(this.timeouts).length);
+	}
+
+	async getPath(path: Array<Spot> | null | undefined) {
+		if (path == null || path == undefined) {
 			console.log('No path found');
 		}
 		else {
@@ -49,37 +55,49 @@ export class LevelComponent {
 			this.setStart(path[0]);
 			path.shift();
 			path.forEach(spot => {
-				setTimeout(() => {
+				this.setTimeout(() => {
 					this.heroComponent?.moveTo(spot.y, spot.x, spot.cell.speed);
 				}, this.heroSpeed * index);
 				for (let i = 0; i < spot.cell.speed; i++) {
-					setTimeout(() => {
+					this.setTimeout(() => {
 						this.turns++;
-					}, this.heroSpeed * index);
+					}, this.heroSpeed * (index + 0.5));
 					index++;
 				}
 			});
-			setTimeout(() => {
+			this.setTimeout(() => {
 				this.heroComponent?.updateAnimation('eat');
-				this.turns++;
 			}, this.heroSpeed * index);
 		}
 	}
 
+	setTimeout(callback: () => void, time: number) {
+		let id = 0;
+		do {
+			id++;
+		} while (this.timeouts[id] != null);
+		this.timeouts[id] = setTimeout(() => {
+			callback();
+			delete this.timeouts[id];
+		}, time);
+	}
+
 	setStart(start: Spot) {
+		this.start = start;
 		this.heroComponent?.moveTo(start.y, start.x, 0);
 		this.heroComponent?.updateAnimation('sleep');
 	}
 
-	setCellDrag( event: {cell: Cell, id: {X: number, Y: number} | {I: number}, clear: boolean } | {X: number, Y: number} | {I: number}) {
+	setCellDrag(event: { cell: Cell, id: { X: number, Y: number } | { I: number }, clear: boolean } | { X: number, Y: number } | { I: number }) {
+		this.stopResolving();
 		if ('clear' in event && event.clear) {
 			if (this.cellDrag != null && 'I' in this.cellDrag.id) {
 				this.cellsType[this.cellDrag.id.I].nb--;
 				this.cellsType.forEach((cellType, index) => {
 					if (cellType.cell.name == event.cell.name) {
 						this.cellsType[index].nb++;
-						
-						if (cellType.cell.name == 'start' && this.mapComponent){
+
+						if (cellType.cell.name == 'start' && this.mapComponent) {
 							this.mapComponent.start = null;
 						}
 					}
@@ -91,7 +109,7 @@ export class LevelComponent {
 			this.cellDrag = event;
 		}
 		else if ('I' in event) {
-			this.cellDrag = {'cell': this.cellsType[event.I].cell, 'id': event};
+			this.cellDrag = { 'cell': this.cellsType[event.I].cell, 'id': event };
 		}
 	}
 
@@ -100,7 +118,7 @@ export class LevelComponent {
 			this.cellsType.forEach((cellType, index) => {
 				if (cellType.cell.name == this.cellDrag!.cell.name) {
 					this.cellsType[index].nb++;
-					if (this.cellDrag!.cell.name == 'start' && this.mapComponent){
+					if (this.cellDrag!.cell.name == 'start' && this.mapComponent) {
 						this.mapComponent.start = null;
 					}
 				}
@@ -108,6 +126,25 @@ export class LevelComponent {
 			this.mapComponent?.changeCell(this.cellDrag.id.X, this.cellDrag.id.Y, this.defaultCell);
 		}
 		this.cellDrag = null;
+	}
+
+	stopResolving() {
+		if (this.heroComponent) {
+			this.heroComponent.updateAnimation('wait');
+		}
+		Object.keys(this.timeouts).forEach(key => {
+			clearTimeout(this.timeouts[parseInt(key)]);
+			delete this.timeouts[parseInt(key)];
+		});
+		this.turns = 0;
+		if (this.start) {
+			this.setStart(this.start);
+		}
+	}
+
+	solve() {
+		this.stopResolving();
+		this.getPath(this.mapComponent?.findPath());
 	}
 
 }

@@ -1,6 +1,6 @@
 export interface Cell {
     name: string;
-    image: string;
+    image: Array<string>;
     type: string;
     through: Array<boolean>;
     speed: number;

@@ -2,7 +2,7 @@
     <ng-container *ngFor="let cell of cellsType; let i = index">
         <div *ngIf="cell.nb > 0">
             <div class="cell-sep-cell">
-                <app-cell [cellSize]="cellSize" [image]="cell.cell.image" [name]="cell.cell.name" [id]="{'I': i}"
+                <app-cell [cellSize]="cellSize" [image]="cell.cell.image[0]" [name]="cell.cell.name" [id]="{'I': i}"
                     (cellDragId)="cellDragIdChild($event)" />
             </div>
             <span class="cell-sep-cell-nb">{{cell.nb}}</span>

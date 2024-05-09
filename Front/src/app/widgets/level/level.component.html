@@ -4,9 +4,13 @@
     </div>
     <div class="level-map level-sub">
         <app-hero [heroSpeed]="heroSpeed" [cellSize]="cellSize" [hidden]="!(this.mapComponent && this.mapComponent!.start != null)"/>
-        <app-map (getPath)="getPath($event)" (getStart)="setStart($event)" [cellSize]="cellSize" [cellDrag]="cellDrag" [defaultCell]="defaultCell" (dropped)="setCellDrag($event)" [mapSize]="{X: 10, Y: 10}"/>
+        <app-map (getStart)="setStart($event)" [cellSize]="cellSize" [cellDrag]="cellDrag" [defaultCell]="defaultCell" (dropped)="setCellDrag($event)" [mapSize]="{X: 5, Y: 5}" [turns]="turns"/>
     </div>
-    <span class="level-sub level-info">
-        {{turns}}
-    </span>
+    <div class="level-sub level-info">
+        <span>
+            {{turns}}
+        </span>
+        <button (click)="stopResolving()" *ngIf="(timeouts | json) != ({} | json)" id="Stop">Stop</button>
+        <button (click)="solve()" *ngIf="(timeouts | json) == ({} | json)" id="Solve">Solve</button>
+    </div>
 </div>
