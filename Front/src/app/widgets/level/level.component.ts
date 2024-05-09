@@ -5,6 +5,9 @@ import { Spot } from '../../scripts/spot';
 import { CellSelectorComponent } from './sub_widgets/cell-selector/cell-selector.component';
 import { Cell } from '../../interfaces/cell';
 import { NgIf, CommonModule } from '@angular/common';
+import { Level } from '../../interfaces/level';
+import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
 	selector: 'app-level',
@@ -23,7 +26,6 @@ export class LevelComponent {
 
 	heroSpeed: number = 250;
 	turns: number = 0;
-	cellSize: string = 'calc(min(calc(95vh - 28px), calc(95vw - 28px)) / 15)'
 	cellsType: Array<{ cell: Cell, nb: number }> = [
 		{ nb: 1, cell: { image: ["assets/sprites/cat_pack/start.png"], name: "start", through: [true], speed: 1 } as Cell },
 		{ nb: 1, cell: { image: ["assets/sprites/cat_pack/end.png"], name: "end", through: [true], speed: 1 } as Cell },
@@ -37,9 +39,41 @@ export class LevelComponent {
 	defaultCell: Cell = { image: ["assets/sprites/cat_pack/floor.png"], name: "floor", through: [true], speed: 1 } as Cell;
 	start: Spot | null = null;
 	timeouts: { [key: number]: any } = {};
+	mapSize: { x: number, y: number } = { x: 5, y: 5 };
+	cellSize: string = 'calc(min(calc(95vh - 28px), calc(85vw - 28px)) / 15)'
 
 	@ViewChild(HeroComponent) heroComponent: HeroComponent | undefined;
 	@ViewChild(MapComponent) mapComponent: MapComponent | undefined;
+	@ViewChild(CellSelectorComponent) cellSelectorComponent: CellSelectorComponent | undefined;
+
+	constructor(private route: ActivatedRoute, private titleService: Title) {
+		let level = history.state.level;
+		if (level) {
+			this.cellsType = level.cells;
+			this.defaultCell = level.defaultCell;
+			this.mapSize = level.size;
+			this.titleService.setTitle(level.name);
+		}
+	}
+
+	ngOnInit() {
+		let cellSelectorComponentWidth = this.cellSelectorComponent ? this.cellSelectorComponent.nativeElement.offsetWidth : 0;
+		this.cellSize = `
+		calc(
+			min(
+				calc(95vh - 28px), 
+				calc(95vw - 10rem - 28px - ${cellSelectorComponentWidth}px)
+			) / max(
+				max(
+					${this.mapSize.x},
+					${this.mapSize.y}
+				), 15
+			)
+		)
+		`
+		console.log(this.mapSize);
+		console.log(this.cellSize);
+	}
 
 	async getPath(path: Array<Spot> | null | undefined) {
 		if (path == null || path == undefined) {

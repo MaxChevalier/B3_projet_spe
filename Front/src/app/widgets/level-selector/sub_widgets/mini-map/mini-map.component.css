@@ -1,4 +1,4 @@
-.map{
+.mini-map{
     display: grid;
     gap: 0;
     border-bottom: 1px solid black;

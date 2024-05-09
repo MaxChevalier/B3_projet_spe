@@ -24,17 +24,17 @@ export class MapComponent {
     @Input({required: true}) defaultCell: Cell = {image: [""], name: "", through: [false], speed: 0 } as Cell;
     @Input({required: true}) cellSize: string = '10px';
     @Input({required: true}) cellDrag: {cell: Cell, id: {X: number, Y: number} | {I: number} } | null = null;
-    @Input({required: false}) mapSize: {X: number, Y: number} = {X: 15, Y: 15};
+    @Input({required: false}) mapSize: {x: number, y: number} = {x: 15, y: 15};
     @Input({required: true}) turns: number = 0;
 
     @Output() getStart: EventEmitter<Spot> = new EventEmitter();
     @Output() dropped: EventEmitter<{cell: Cell, id: {X: number, Y: number} | {I: number}, clear: boolean } | {X: number, Y: number} | {I: number}> = new EventEmitter();
 
     ngOnInit() {
-        this.cells = new Array(this.mapSize.X);
-        for (let i = 0; i < this.mapSize.X; i++) {
-            this.cells[i] = new Array(this.mapSize.Y);
-            for (let j = 0; j < this.mapSize.Y; j++) {
+        this.cells = new Array(this.mapSize.x);
+        for (let i = 0; i < this.mapSize.x; i++) {
+            this.cells[i] = new Array(this.mapSize.y);
+            for (let j = 0; j < this.mapSize.y; j++) {
                 this.cells[i][j] = new Spot(i, j, this.defaultCell);
             }
         }

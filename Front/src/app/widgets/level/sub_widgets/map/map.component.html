@@ -1,4 +1,4 @@
-<div class="map" [style]="'grid-template-columns: repeat(' + mapSize.X + ', 1fr);grid-template-rows: repeat(' + mapSize.Y + ', 1fr);'">
+<div class="map" [style]="'grid-template-columns: repeat(' + mapSize.x + ', 1fr);grid-template-rows: repeat(' + mapSize.y + ', 1fr);'">
     <ng-container *ngFor="let innerArray of cells; let X = index">
         <div *ngFor="let cell of innerArray; let Y = index" (dragover)="dragOver($event)" (drop)="drop($event,X,Y)">
             <app-cell [image]="cell.cell.image[turns % cell.cell.image.length]" [name]="cell.cell.name" [cellSize]="cellSize" [id]="{'X': X, 'Y': Y}"

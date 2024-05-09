@@ -20,6 +20,7 @@ export class CellSelectorComponent {
 
   @Output() cellDragId: EventEmitter<{ X: number, Y: number } | { I: number }> = new EventEmitter();
   @Output() cellDrop: EventEmitter<null> = new EventEmitter();
+	nativeElement: any;
 
   cellDragIdChild(event: { X: number, Y: number } | { I: number }) {
     this.cellDragId.emit(event);
