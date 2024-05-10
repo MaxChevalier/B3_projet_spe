@@ -30,7 +30,7 @@ export class HomeComponent {
   }
 
   Guid() {
-    this.router.navigate(['/element-list']);
+    this.router.navigate(['/library']);
   }
   profileLink() {
     this.router.navigate(['/profile']);

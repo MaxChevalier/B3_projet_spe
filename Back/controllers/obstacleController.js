@@ -25,9 +25,9 @@ async function getObstacleById(req, res) {
 }
 
 async function addObstacle(req, res) {
-  const { name, image, type, through, speed } = req.body;
+  const { name, image, type, through,descrition, speed } = req.body;
   try {
-    const newObstacle = await Obstacle.create({ name, image, type, through, speed });
+    const newObstacle = await Obstacle.create({ name, image, type, through,descrition, speed });
     res.send('Obstacle ajouté avec succès !');
   } catch (error) {
     console.error('Erreur lors de l\'ajout de l\'obstacle :', error);
@@ -37,13 +37,13 @@ async function addObstacle(req, res) {
 
 async function updateObstacle(req, res) {
   const obstacleId = req.params.id;
-  const { name, image, type, through, speed } = req.body;
+  const { name, image, type, through,descrition, speed } = req.body;
   try {
     const obstacle = await Obstacle.findByPk(obstacleId);
     if (!obstacle) {
       return res.status(404).send('Obstacle non trouvé');
     }
-    await obstacle.update({ name, image, type, through, speed });
+    await obstacle.update({ name, image, type, through,descrition, speed });
     res.send('Obstacle mis à jour avec succès !');
   } catch (error) {
     console.error('Erreur lors de la mise à jour de l\'obstacle :', error);
