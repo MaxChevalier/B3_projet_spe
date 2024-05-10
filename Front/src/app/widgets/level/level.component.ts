@@ -5,7 +5,6 @@ import { Spot } from '../../scripts/spot';
 import { CellSelectorComponent } from './sub_widgets/cell-selector/cell-selector.component';
 import { Cell } from '../../interfaces/cell';
 import { NgIf, CommonModule } from '@angular/common';
-import { Level } from '../../interfaces/level';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -42,6 +41,7 @@ export class LevelComponent {
 	mapSize: { x: number, y: number } = { x: 5, y: 5 };
 	cellSize: string = 'calc(min(calc(95vh - 28px), calc(85vw - 28px)) / 15)'
 	defaultLayout: Array<{ x: number, y: number, cell: Cell }> = [];
+	id: any = 0;
 
 	@ViewChild(HeroComponent) heroComponent: HeroComponent | undefined;
 	@ViewChild(MapComponent) mapComponent: MapComponent | undefined;
@@ -55,6 +55,7 @@ export class LevelComponent {
 			this.mapSize = level.size;
 			this.defaultLayout = level.defaultLayout;
 			this.titleService.setTitle(level.name);
+			this.id = level.id;
 		}
 	}
 
@@ -98,6 +99,8 @@ export class LevelComponent {
 			this.setTimeout(() => {
 				this.heroComponent?.updateAnimation('eat');
 				// TODO: Save test in database
+				// score save in this.turns
+				// id_level in this.id
 			}, this.heroSpeed * index);
 		}
 	}
