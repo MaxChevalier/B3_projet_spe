@@ -32,4 +32,8 @@ export class HomeComponent {
   Guid() {
     this.router.navigate(['/element-list']);
   }
+  profileLink() {
+    this.router.navigate(['/profile']);
+
+  }
 }

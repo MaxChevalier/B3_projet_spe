@@ -66,7 +66,8 @@ async function updateUser(req, res) {
       return res.status(404).send('Utilisateur non trouvé');
     }
     await user.update({ name, email, password });
-    res.send('Utilisateur mis à jour avec succès !');
+    const token = generateToken(user);
+    res.json({token})
   } catch (error) {
     console.error('Erreur lors de la mise à jour de l\'utilisateur :', error);
     res.status(500).send('Erreur serveur lors de la mise à jour de l\'utilisateur');
@@ -93,20 +94,31 @@ async function login(req, res) {
   try {
     console.log(email);
     const user = await User.findOne({ where: { email } });
-      if (!user) {
-          return res.status(401).send('Utilisateur non trouvé');
-      }
-      const isPasswordValid = await comparePasswords(password, user.password);
-      const token = generateToken(user);
-        res.json({ token });
-      if (!isPasswordValid) {
-          return res.status(401).send('Mot de passe incorrect');
-      }
-      
-      res.send('Connexion réussie');
+    if (!user) {
+      return res.status(401).send('Utilisateur non trouvé');
+    }
+    const isPasswordValid = await comparePasswords(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).send('Mot de passe incorrect');
+    }
+    const token = generateToken(user);
+    res.json({ token, message: 'Connexion réussie' });
   } catch (error) {
-      console.error('Erreur lors de la connexion :', error);
-      res.status(500).send('Erreur serveur lors de la connexion');
+    console.error('Erreur lors de la connexion :', error);
+    res.status(500).send('Erreur serveur lors de la connexion');
+  }
+}
+
+
+async function info(req, res) {
+  try{
+    const token = req.headers.authorization;
+    const decoded = jwt.verify(token, tokens.Token.secretKey);
+    const user = await User.findByPk(decoded.id);
+    res.json(user);
+  }catch(error){
+    console.error('Erreur lors de la récupération de l\'utilisateur :', error);
+    res.status(500).send('Erreur serveur lors de la récupération de l\'utilisateur');
   }
 }
 
@@ -116,5 +128,6 @@ module.exports = {
   addUser,
   updateUser,
   deleteUser,
-  login
+  login,
+  info
 };

@@ -30,12 +30,12 @@ export class LoginComponent {
     if (this.formulaire.invalid) {
       return;
     }
-    this.authService.login({ email: this.formulaire.value.email, password: this.formulaire.value.password })
-    .subscribe({
-      next: () => {
+     this.authService.login({ email: this.formulaire.value.email, password: this.formulaire.value.password }).subscribe(
+      (response) => {
         this.router.navigate(['/home']);
+        localStorage.setItem('token', response.token);
       },
-      error: (error) => {
+      (error) => {
         if (error.status === 401) {
           this.errorMessage = 'Adresse e-mail ou mot de passe incorrect.';
         } else {
@@ -43,6 +43,6 @@ export class LoginComponent {
           console.error('Erreur lors de la connexion :', error);
         }
       }
-    });
+     );
   }
 }

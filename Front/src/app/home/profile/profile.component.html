@@ -1,0 +1,23 @@
+<div class="profile-container">
+    <h2>Profil utilisateur</h2>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Nom</label>
+        <input type="text" id="name" formControlName="name">
+        <div *ngIf="profileForm.get('name')!.invalid && (profileForm.get('name')!.dirty || profileForm.get('name')!.touched)" class="error-message">Le nom est requis.</div>
+      </div>
+      <div class="form-group">
+        <label for="email">Adresse Email</label>
+        <input type="email" id="email" formControlName="email">
+        <div *ngIf="profileForm.get('email')!.invalid && (profileForm.get('email')!.dirty || profileForm.get('email')!.touched)" class="error-message">L'adresse email est requise.</div>
+        <div *ngIf="profileForm.get('email')!.errors?.['email']" class="error-message">L'adresse email doit être valide.</div>
+      </div>
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" formControlName="password">
+        <div *ngIf="profileForm.get('password')!.invalid && (profileForm.get('password')!.dirty || profileForm.get('password')!.touched)" class="error-message">Le mot de passe est requis.</div>
+      </div>
+      <button type="submit">Enregistrer</button>
+    </form>
+  </div>
+  

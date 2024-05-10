@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken');
 const tokens = require('./token');
 
 const validateRequest = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+    const authHeader = req.headers.authorization;
+    const token = authHeader
     if (!token) {
         return res.status(401).json({ message: 'Token manquant' });
     }

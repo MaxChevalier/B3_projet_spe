@@ -42,6 +42,7 @@ export class RegisterComponent {
           if (response && response.error) {
             this.errorMessage = response.error.message;
           } else {
+            localStorage.setItem('token', response.token);
             this.router.navigate(['/home']);
           }
         },
