@@ -47,7 +47,7 @@ async function addUser(req, res) {
       return res.status(409).send('Cet email est déjà utilisé.');
     }
     const hashedPassword = await hashPassword(password);
-    const newUser = await User.create({ name, email, password: hashedPassword });
+    const newUser = await User.create({ name, email, password: hashedPassword, role: 'user'});
     const token = generateToken(newUser);
     res.json({ token });
   } catch (error) {
