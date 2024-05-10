@@ -20,6 +20,7 @@ export class LevelSelectorComponent {
   levels: Array<Level> = []
 
   constructor(private _router: Router) {
+    // TODO: get levels from server with format below
     this.levels = [
       {
         name: 'Level 1',

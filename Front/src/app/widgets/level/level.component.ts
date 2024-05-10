@@ -97,6 +97,7 @@ export class LevelComponent {
 			});
 			this.setTimeout(() => {
 				this.heroComponent?.updateAnimation('eat');
+				// TODO: Save test in database
 			}, this.heroSpeed * index);
 		}
 	}
