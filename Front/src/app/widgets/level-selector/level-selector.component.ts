@@ -82,8 +82,6 @@ export class LevelSelectorComponent {
         modification_date: new Date(),
         size: { x: 5, y: 5 },
         cells: [
-          { nb: 1, cell: { image: ["assets/sprites/cat_pack/start.png"], name: "start", through: [true], speed: 1 } as Cell },
-          { nb: 1, cell: { image: ["assets/sprites/cat_pack/end.png"], name: "end", through: [true], speed: 1 } as Cell },
           { nb: 5, cell: { image: ["assets/sprites/cat_pack/wall.png"], name: "wall", through: [false], speed: 0 } as Cell },
           { nb: 3, cell: { image: ["assets/sprites/cat_pack/slow1.png"], name: "water", through: [true], speed: 2 } as Cell },
           { nb: 4, cell: { image: ["assets/sprites/cat_pack/slow2.png"], name: "squid", through: [true], speed: 3 } as Cell },
@@ -91,7 +89,7 @@ export class LevelSelectorComponent {
           { nb: 8, cell: { image: ["assets/sprites/cat_pack/wall_switch_off.png", "assets/sprites/cat_pack/wall_switch_on.png"], name: "spike_off", through: [true, false], "speed": 1 } as Cell },
         ],
         defaultCell: { image: ["assets/sprites/cat_pack/floor.png"], name: "floor", through: [true], speed: 1 } as Cell,
-        defaultLayout: []
+        defaultLayout: [{x: 1, y: 1, cell: { image: ["assets/sprites/cat_pack/start.png"], name: "start", through: [true], speed: 1 } as Cell}, {x: 3, y: 3, cell: { image: ["assets/sprites/cat_pack/end.png"], name: "end", through: [true], speed: 1 } as Cell }]
       },
       {
         name: 'Level 5',

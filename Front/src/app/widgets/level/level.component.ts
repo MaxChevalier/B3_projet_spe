@@ -41,6 +41,7 @@ export class LevelComponent {
 	timeouts: { [key: number]: any } = {};
 	mapSize: { x: number, y: number } = { x: 5, y: 5 };
 	cellSize: string = 'calc(min(calc(95vh - 28px), calc(85vw - 28px)) / 15)'
+	defaultLayout: Array<{ x: number, y: number, cell: Cell }> = [];
 
 	@ViewChild(HeroComponent) heroComponent: HeroComponent | undefined;
 	@ViewChild(MapComponent) mapComponent: MapComponent | undefined;
@@ -52,6 +53,7 @@ export class LevelComponent {
 			this.cellsType = level.cells;
 			this.defaultCell = level.defaultCell;
 			this.mapSize = level.size;
+			this.defaultLayout = level.defaultLayout;
 			this.titleService.setTitle(level.name);
 		}
 	}
@@ -71,8 +73,6 @@ export class LevelComponent {
 			)
 		)
 		`
-		console.log(this.mapSize);
-		console.log(this.cellSize);
 	}
 
 	async getPath(path: Array<Spot> | null | undefined) {

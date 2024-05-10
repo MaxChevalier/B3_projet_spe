@@ -9,9 +9,10 @@ export class Spot{
     previous : Spot|null;
     neighbors : Array<Spot>;
     cell: Cell;
+    isLocked: boolean = false;
 
 
-    constructor(x: number, y: number, cell: Cell){
+    constructor(x: number, y: number, cell: Cell, isLocked: boolean = false){
         this.x = x;
         this.y = y;
         this.f = 0;
@@ -20,6 +21,7 @@ export class Spot{
         this.previous = null;
         this.neighbors = [];
         this.cell = cell;
+        this.isLocked = isLocked;
     }
 
     public addNeighbors(spots: Array<Array<Spot>>){

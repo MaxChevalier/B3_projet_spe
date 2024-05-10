@@ -4,7 +4,7 @@
     </div>
     <div class="level-map level-sub">
         <app-hero [heroSpeed]="heroSpeed" [cellSize]="cellSize" [hidden]="!(this.mapComponent && this.mapComponent!.start != null)"/>
-        <app-map (getStart)="setStart($event)" [cellSize]="cellSize" [cellDrag]="cellDrag" [defaultCell]="defaultCell" (dropped)="setCellDrag($event)" [mapSize]="mapSize" [turns]="turns"/>
+        <app-map (getStart)="setStart($event)" [cellSize]="cellSize" [cellDrag]="cellDrag" [defaultCell]="defaultCell" (dropped)="setCellDrag($event)" [mapSize]="mapSize" [turns]="turns" [defaultLayout]="defaultLayout"/>
     </div>
     <div class="level-sub level-info">
         <span>
