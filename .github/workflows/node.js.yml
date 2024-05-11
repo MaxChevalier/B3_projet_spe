@@ -23,13 +23,14 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Change directory to Back
-      run: cd Back
     - name: Install dependencies
       run: npm ci
       env:
         NODE_OPTIONS: '--max-old-space-size=4096'
+      working-directory: ./Back
     - name: Build
       run: npm run build --if-present
+      working-directory: ./Back
     - name: Test
       run: npm test
+      working-directory: ./Back
