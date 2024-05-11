@@ -1,0 +1,38 @@
+.levelButton{
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 15rem;
+    height: 20rem;
+    margin: 2.5rem;
+    background-color: #343941;
+    border: 4px solid #0b0c0e;
+    border-radius: 10px;
+    padding: 10px;
+    color: azure;
+}
+
+.levelButton:hover{
+    background-color: #1d1f24;
+    border: 4px solid #000000;
+}
+
+.df-col{
+    display: flex;
+    flex-direction: column;
+}
+
+.levelTitle{
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.levelCreator{
+    font-size: 1rem;
+}
+
+.levelDate{
+    font-size: 0.5rem;
+}

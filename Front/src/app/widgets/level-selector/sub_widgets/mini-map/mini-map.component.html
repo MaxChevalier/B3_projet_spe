@@ -1,0 +1,5 @@
+<div class="mini-map" [style]="'grid-template-columns: repeat(' + Size.x + ', 1fr);grid-template-rows: repeat(' + Size.y + ', 1fr);'">
+    <ng-container *ngFor="let innerArray of cells">
+        <app-mini-cell *ngFor="let cell of innerArray" [cellSize]="cellSize" [image]="cell.image" [name]="cell.name" />
+    </ng-container>
+</div>

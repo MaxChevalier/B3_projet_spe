@@ -1,0 +1,6 @@
+<div class="container">
+  <h2>Select your level</h2>
+  <div class="level-selector">
+    <app-level-button *ngFor="let level of levels" [level]="level" (selectLevel)="select($event)"/>
+  </div>
+</div>

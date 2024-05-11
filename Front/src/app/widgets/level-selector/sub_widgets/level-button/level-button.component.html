@@ -1,0 +1,8 @@
+<button class="levelButton df-col" (click)="select()">
+    <div class="df-col">
+        <span class="levelTitle">{{ level.name }}</span>
+        <span class="levelCreator">by : {{ level.creator }}</span>
+    </div>
+    <app-mini-map [Size]="level.size" [DefaultCell]="level.defaultCell" [DefaultLayout]="level.defaultLayout" />
+    <span class="levelDate">{{ date }}</span>
+</button>
