@@ -11,6 +11,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./Back
+
     strategy:
       matrix:
         node-version: [14.x, 16.x, 18.x]
@@ -21,7 +25,6 @@ jobs:
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
-        working-directory: ./Back
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
