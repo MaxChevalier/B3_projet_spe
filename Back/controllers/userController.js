@@ -18,28 +18,34 @@ function generateToken(user) {
 async function getAllUsers(req, res) {
   try {
     const users = await User.findAll();
-    res.json(users);
+    return res.status(200).json(users);
   } catch (error) {
     console.error('Erreur lors de la récupération des utilisateurs :', error);
-    res.status(500).send('Erreur serveur lors de la récupération des utilisateurs');
+    return res.status(500).send('Erreur serveur lors de la récupération des utilisateurs');
   }
 }
 
 async function getUserById(req, res) {
+  if (!req.params.id) {
+    return res.status(400).send('L\'id de l\'utilisateur est obligatoire');
+  }
   const userId = req.params.id;
   try {
     const user = await User.findByPk(userId);
     if (!user) {
       return res.status(404).send('Utilisateur non trouvé');
     }
-    res.json(user);
+    return res.status(200).json(user);
   } catch (error) {
     console.error('Erreur lors de la récupération de l\'utilisateur :', error);
-    res.status(500).send('Erreur serveur lors de la récupération de l\'utilisateur');
+    return res.status(500).send('Erreur serveur lors de la récupération de l\'utilisateur');
   }
 }
 
 async function addUser(req, res) {
+  if (!req.body.name || !req.body.email || !req.body.password) {
+    return res.status(400).send('Les champs name, email et password sont obligatoires');
+  }
   const { name, email, password } = req.body;
   try {
     const existingUser = await User.findOne({ where: { email } });
@@ -49,15 +55,20 @@ async function addUser(req, res) {
     const hashedPassword = await hashPassword(password);
     const newUser = await User.create({ name, email, password: hashedPassword, role: 'user'});
     const token = generateToken(newUser);
-    res.json({ token });
+    return res.status(201).json({ token });
   } catch (error) {
     console.error('Erreur lors de l\'ajout de l\'utilisateur :', error);
-    res.status(500).send('Erreur serveur lors de l\'ajout de l\'utilisateur');
+    return res.status(500).send('Erreur serveur lors de l\'ajout de l\'utilisateur');
   }
 }
 
 
 async function updateUser(req, res) {
+  if (!req.body.name || !req.body.email || !req.body.password) {
+    return res.status(400).send('Les champs name, email et password sont obligatoires');
+  }else if (!req.params.id) {
+    return res.status(400).send('L\'id de l\'utilisateur est obligatoire');
+  }
   const userId = req.params.id;
   const { name, email, password } = req.body;
   try {
@@ -67,14 +78,17 @@ async function updateUser(req, res) {
     }
     await user.update({ name, email, password });
     const token = generateToken(user);
-    res.json({token})
+    return res.status(200).json({token})
   } catch (error) {
     console.error('Erreur lors de la mise à jour de l\'utilisateur :', error);
-    res.status(500).send('Erreur serveur lors de la mise à jour de l\'utilisateur');
+    return res.status(500).send('Erreur serveur lors de la mise à jour de l\'utilisateur');
   }
 }
 
 async function deleteUser(req, res) {
+  if (!req.params.id) {
+    return res.status(400).send('L\'id de l\'utilisateur est obligatoire');
+  }
   const userId = req.params.id;
   try {
     const user = await User.findByPk(userId);
@@ -82,10 +96,10 @@ async function deleteUser(req, res) {
       return res.status(404).send('Utilisateur non trouvé');
     }
     await user.destroy();
-    res.send('Utilisateur supprimé avec succès !');
+    return res.status(200).send('Utilisateur supprimé avec succès !');
   } catch (error) {
     console.error('Erreur lors de la suppression de l\'utilisateur :', error);
-    res.status(500).send('Erreur serveur lors de la suppression de l\'utilisateur');
+    return res.status(500).send('Erreur serveur lors de la suppression de l\'utilisateur');
   }
 }
 
