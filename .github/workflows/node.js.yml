@@ -18,15 +18,13 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '14.x'
-    - name: ls
-      run: ls
-      working-directory: ./Back
-    - name: Clear Cache
-      run: npm cache clean --force
-      working-directory: ./Back
+
     - name: Install Dependencies
       working-directory: ./Back
       run: npm install
+    - name: Build
+      working-directory: ./Back
+      run: npm run build --if-present
 
 # jobs:
 #   build:
