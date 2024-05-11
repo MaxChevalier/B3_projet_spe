@@ -1,9 +1,9 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CellComponent } from '../cell/cell.component';
-import { Spot } from '../../../../scripts/spot';
-import { Astar } from '../../../../scripts/astar';
-import { Cell } from '../../../../interfaces/cell';
+import { Spot } from '../../../../../scripts/spot';
+import { Astar } from '../../../../../scripts/astar';
+import { Cell } from '../../../../../interfaces/cell';
 import { set } from 'mongoose';
 
 @Component({

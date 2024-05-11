@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MiniCellComponent } from '../mini-cell/mini-cell.component';
 import { NgFor } from '@angular/common';
-import { Cell } from '../../../../interfaces/cell';
+import { Cell } from '../../../../../interfaces/cell';
 
 @Component({
     selector: 'app-mini-map',

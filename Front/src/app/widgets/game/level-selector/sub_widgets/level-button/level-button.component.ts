@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Level } from '../../../../interfaces/level';
+import { Level } from '../../../../../interfaces/level';
 import { MiniMapComponent } from '../mini-map/mini-map.component';
 
 

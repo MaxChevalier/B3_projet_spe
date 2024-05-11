@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LevelButtonComponent } from './sub_widgets/level-button/level-button.component';
-import { Level } from '../../interfaces/level';
-import { Cell } from '../../interfaces/cell';
+import { Level } from '../../../interfaces/level';
+import { Cell } from '../../../interfaces/cell';
 import { NgFor } from '@angular/common';
 import { Router } from '@angular/router';
 

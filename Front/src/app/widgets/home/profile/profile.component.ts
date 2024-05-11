@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
-import { UserService } from '../../userService/user.service';
-import { User } from '../../userService/user';
+import { UserService } from '../../../service/userService/user.service';
+import { User } from '../../../service/userService/user';
 import { CommonModule } from '@angular/common';
 import {
   RouterOutlet,

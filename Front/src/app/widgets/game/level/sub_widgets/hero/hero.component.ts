@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { HeroAnimation } from '../../../../enum/heroAnimation';
+import { HeroAnimation } from '../../../../../enum/heroAnimation';
 
 @Component({
   selector: 'app-hero',

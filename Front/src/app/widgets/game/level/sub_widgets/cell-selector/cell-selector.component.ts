@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CellComponent } from '../cell/cell.component';
-import { Cell } from '../../../../interfaces/cell';
+import { Cell } from '../../../../../interfaces/cell';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({

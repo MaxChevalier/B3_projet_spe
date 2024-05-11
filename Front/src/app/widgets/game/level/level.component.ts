@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { MapComponent } from './sub_widgets/map/map.component';
 import { HeroComponent } from './sub_widgets/hero/hero.component';
-import { Spot } from '../../scripts/spot';
+import { Spot } from '../../../scripts/spot';
 import { CellSelectorComponent } from './sub_widgets/cell-selector/cell-selector.component';
-import { Cell } from '../../interfaces/cell';
+import { Cell } from '../../../interfaces/cell';
 import { NgIf, CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';

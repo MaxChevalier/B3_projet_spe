@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgIf } from '@angular/common';
-import { AuthService } from '../../shared/auth.service';
+import { AuthService } from '../../../service/shared/auth.service';
 import {
   RouterOutlet,
   RouterLink,

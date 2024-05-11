@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Obstacle } from '../../LibraryService/obstacle';
-import { LibraryService } from '../../LibraryService/library.service';
+import { Obstacle } from '../../../service/LibraryService/obstacle';
+import { LibraryService } from '../../../service/LibraryService/library.service';
 
 @Component({
   selector: 'app-library',
