@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x, 16.x, 18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        # Voir le calendrier de sortie de Node.js pris en charge sur https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v3
@@ -23,9 +23,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-      working-directory: ./Back
-    - run: npm run build --if-present
-      working-directory: ./Back
-    - run: npm test
-      working-directory: ./Back
+    - name: Change directory to Back
+      run: cd Back
+    - name: Install dependencies
+      run: npm ci
+      env:
+        NODE_OPTIONS: '--max-old-space-size=4096'
+    - name: Build
+      run: npm run build --if-present
+    - name: Test
+      run: npm test
