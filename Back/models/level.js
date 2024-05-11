@@ -1,5 +1,6 @@
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/database');
+const Obstacle = require('./obstacle');
 
 class Level extends Model {}
 
@@ -9,7 +10,7 @@ Level.init({
     allowNull: false
   },
   creator: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false
   },
   creation_date: {
@@ -20,7 +21,27 @@ Level.init({
     type: DataTypes.DATE,
     allowNull: false
   },
-  layout: {
+  size_x: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  size_y: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  obstacles: {
+    type: DataTypes.JSON,
+    allowNull: false
+  },
+  defaultObstacleId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'Obstacle',
+      key: 'id'
+    }
+  },
+  defaultLayout: {
     type: DataTypes.JSON,
     allowNull: false
   }
@@ -29,5 +50,6 @@ Level.init({
   modelName: 'Level',
   timestamps: true
 });
+Level.belongsTo(Obstacle, { as: 'defaultObstacle' });
 
 module.exports = Level;

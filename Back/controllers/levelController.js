@@ -25,9 +25,9 @@ async function getLevelById(req, res) {
 }
 
 async function addLevel(req, res) {
-  const { name, creator, creation_date, modification_date, layout } = req.body;
+  const { name, creator, creation_date, modification_date, size, obstacles, defaultCell, defaultLayout } = req.body;
   try {
-    const newLevel = await Level.create({ name, creator, creation_date, modification_date, layout });
+    const newLevel = await Level.create({ name, creator, creation_date, modification_date, size, obstacles, defaultCell, defaultLayout });
     res.send('Niveau ajouté avec succès !');
   } catch (error) {
     console.error('Erreur lors de l\'ajout du niveau :', error);
@@ -37,13 +37,13 @@ async function addLevel(req, res) {
 
 async function updateLevel(req, res) {
   const levelId = req.params.id;
-  const { name, creator, creation_date, modification_date, layout } = req.body;
+  const { name, creator, creation_date, modification_date, size, obstacles, defaultCell, defaultLayout } = req.body;
   try {
     const level = await Level.findByPk(levelId);
     if (!level) {
       return res.status(404).send('Niveau non trouvé');
     }
-    await level.update({ name, creator, creation_date, modification_date, layout });
+    await level.update({ name, creator, creation_date, modification_date, size, obstacles, defaultCell, defaultLayout });
     res.send('Niveau mis à jour avec succès !');
   } catch (error) {
     console.error('Erreur lors de la mise à jour du niveau :', error);

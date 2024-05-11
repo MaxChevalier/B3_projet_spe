@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-secondary" (click)="scroll(-1)">&#8249;</button>
+      </div>
+      <div class="col">
+        <!-- Cartes des obstacles -->
+        <div class="card-deck">
+          <div class="card" *ngFor="let obstacle of obstacles">
+            <img [src]="obstacle.image[0]" class="card-img-top" alt="Obstacle Image">
+            <div class="card-body">
+              <h5 class="card-title">{{ obstacle.name }}</h5>
+              <p class="card-text">{{ obstacle.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <button class="btn btn-secondary" (click)="scroll(1)">&#8250;</button>
+      </div>
+    </div>
+  </div>
+  

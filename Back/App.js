@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const userRoutes = require('./routes/userRoutes');
 const levelRoutes = require('./routes/levelRoutes');
@@ -10,6 +11,9 @@ const app = express();
 
 // Middleware pour analyser les corps de requête JSON
 app.use(bodyParser.json());
+
+// Utilisation du middleware CORS
+app.use(cors());
 
 // Routes pour les utilisateurs
 app.use('/api/users', userRoutes);
