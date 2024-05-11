@@ -21,6 +21,9 @@ jobs:
     - name: ls
       run: ls
       working-directory: ./Back
+    - name: Clear Cache
+      run: npm cache clean --force
+      working-directory: ./Back
     - name: Install Dependencies
       working-directory: ./Back
       run: npm ci
