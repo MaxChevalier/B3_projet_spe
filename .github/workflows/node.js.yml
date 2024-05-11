@@ -25,6 +25,9 @@ jobs:
     - name: Build
       working-directory: ./Back
       run: npm run build --if-present
+    - name: Test
+      working-directory: ./Back
+      run: npm test
 
 # jobs:
 #   build:
