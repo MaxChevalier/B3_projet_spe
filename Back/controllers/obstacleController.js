@@ -3,7 +3,7 @@ const Obstacle = require('../models/obstacle');
 async function getAllObstacles(req, res) {
   try {
     const obstacles = await Obstacle.findAll();
-    res.json(obstacles);
+    res.status(200).json(obstacles);
   } catch (error) {
     console.error('Erreur lors de la récupération des obstacles :', error);
     res.status(500).send('Erreur serveur lors de la récupération des obstacles');
@@ -17,7 +17,7 @@ async function getObstacleById(req, res) {
     if (!obstacle) {
       return res.status(404).send('Obstacle non trouvé');
     }
-    res.json(obstacle);
+    res.status(200).json(obstacle);
   } catch (error) {
     console.error('Erreur lors de la récupération de l\'obstacle :', error);
     res.status(500).send('Erreur serveur lors de la récupération de l\'obstacle');
@@ -28,7 +28,7 @@ async function addObstacle(req, res) {
   const { name, image, type, through,descrition, speed } = req.body;
   try {
     const newObstacle = await Obstacle.create({ name, image, type, through,descrition, speed });
-    res.send('Obstacle ajouté avec succès !');
+    res.status(200).json(newObstacle);
   } catch (error) {
     console.error('Erreur lors de l\'ajout de l\'obstacle :', error);
     res.status(500).send('Erreur serveur lors de l\'ajout de l\'obstacle');
@@ -44,7 +44,7 @@ async function updateObstacle(req, res) {
       return res.status(404).send('Obstacle non trouvé');
     }
     await obstacle.update({ name, image, type, through,descrition, speed });
-    res.send('Obstacle mis à jour avec succès !');
+    res.status(200).json(obstacle);
   } catch (error) {
     console.error('Erreur lors de la mise à jour de l\'obstacle :', error);
     res.status(500).send('Erreur serveur lors de la mise à jour de l\'obstacle');
@@ -59,7 +59,7 @@ async function deleteObstacle(req, res) {
       return res.status(404).send('Obstacle non trouvé');
     }
     await obstacle.destroy();
-    res.send('Obstacle supprimé avec succès !');
+    res.status(200);
   } catch (error) {
     console.error('Erreur lors de la suppression de l\'obstacle :', error);
     res.status(500).send('Erreur serveur lors de la suppression de l\'obstacle');
