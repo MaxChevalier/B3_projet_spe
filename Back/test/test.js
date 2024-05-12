@@ -15,3 +15,6 @@ beforeAll(async () => {
 });
 
 require("./userController");
+require("./obstacleController");
+require("./testController");
+require("./levelController");
