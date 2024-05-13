@@ -50,9 +50,9 @@ export class LevelComponent {
 	constructor(private route: ActivatedRoute, private titleService: Title) {
 		let level = history.state.level;
 		if (level) {
-			this.cellsType = level.cells;
-			this.defaultCell = level.defaultCell;
-			this.mapSize = level.size;
+			this.cellsType = level.obstacles;
+			this.defaultCell = level.defaultObstacleId;
+			this.mapSize = { x: level.size_x, y: level.size_y };
 			this.defaultLayout = level.defaultLayout;
 			this.titleService.setTitle(level.name);
 			this.id = level.id;

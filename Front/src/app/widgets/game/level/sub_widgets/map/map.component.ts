@@ -4,7 +4,6 @@ import { CellComponent } from '../cell/cell.component';
 import { Spot } from '../../../../../scripts/spot';
 import { Astar } from '../../../../../scripts/astar';
 import { Cell } from '../../../../../interfaces/cell';
-import { set } from 'mongoose';
 
 @Component({
     selector: 'app-map',

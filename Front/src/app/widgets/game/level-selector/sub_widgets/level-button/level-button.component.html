@@ -3,6 +3,6 @@
         <span class="levelTitle">{{ level.name }}</span>
         <span class="levelCreator">by : {{ level.creator }}</span>
     </div>
-    <app-mini-map [Size]="level.size" [DefaultCell]="level.defaultCell" [DefaultLayout]="level.defaultLayout" />
+    <app-mini-map [Size]="{x: level.size_x, y: level.size_y}" [DefaultCell]="level.defaultObstacleId" [DefaultLayout]="level.defaultLayout" />
     <span class="levelDate">{{ date }}</span>
 </button>

@@ -18,7 +18,6 @@ export class CellComponent {
   @Output() cellDragId: EventEmitter<{ X: number, Y: number } | { I: number }> = new EventEmitter();
 
   dragStart(event: any) {
-    console.log('dragStart');
     this.cellDragId.emit(this.id);
   }
 

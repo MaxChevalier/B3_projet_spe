@@ -9,7 +9,7 @@ describe("Obstacle Controller", () => {
                 image: "wall.jpg",
                 type: "solid",
                 through: false,
-                descrition: "A solid obstacle",
+                description: "A solid obstacle",
                 speed: 1,
             };
             const req = httpMocks.createRequest({ body: obstacle });
@@ -23,7 +23,7 @@ describe("Obstacle Controller", () => {
                 name: "Wall",
                 image: "wall.jpg",
                 type: "solid",
-                descrition: "A solid obstacle",
+                description: "A solid obstacle",
                 speed: 1,
             };
             const req = httpMocks.createRequest({ body: obstacle });

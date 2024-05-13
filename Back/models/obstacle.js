@@ -20,7 +20,7 @@ Obstacle.init({
       type: DataTypes.JSON, // Array<boolean> est représenté comme JSON
       allowNull: false
     },
-    descrition: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false
     },

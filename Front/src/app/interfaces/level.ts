@@ -5,8 +5,9 @@ export interface Level {
     creator: string;
     creation_date: Date;
     modification_date: Date;
-    size: { x: number, y: number };
-    cells: Array<{ nb: number, cell: Cell }>;
-    defaultCell: Cell;
+    size_x: number,
+    size_y: number,
+    obstacles: Array<{ nb: number, cell: Cell }>;
+    defaultObstacleId: Cell;
     defaultLayout: Array<{ x: number, y: number, cell: Cell }>;
 }
