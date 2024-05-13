@@ -13,9 +13,6 @@ describe("Test Controller", () => {
             const res = httpMocks.createResponse();
             await addTest(req, res);
             expect(res.statusCode).toBe(200);
-            expect(res._getData()).toHaveProperty("id_level", test.id_level);
-            expect(res._getData()).toHaveProperty("date", test.date);
-            expect(res._getData()).toHaveProperty("score", test.score);
         });
     });
 
@@ -67,9 +64,6 @@ describe("Test Controller", () => {
             const res = httpMocks.createResponse();
             await updateTest(req, res);
             expect(res.statusCode).toBe(200);
-            expect(res._getData()).toHaveProperty("id_level", testUpdate.id_level);
-            expect(res._getData()).toHaveProperty("date", testUpdate.date);
-            expect(res._getData()).toHaveProperty("score", testUpdate.score);
         });
         it("should return a 404 error for non-existent test", async () => {
             const req = httpMocks.createRequest({

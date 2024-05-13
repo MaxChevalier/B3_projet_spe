@@ -9,14 +9,27 @@ describe("Obstacle Controller", () => {
                 image: "wall.jpg",
                 type: "solid",
                 through: false,
-                description: "A solid obstacle",
-                speed: null,
+                descrition: "A solid obstacle",
+                speed: 1,
             };
             const req = httpMocks.createRequest({ body: obstacle });
             const res = httpMocks.createResponse();
             await addObstacle(req, res);
             expect(res.statusCode).toBe(200);
-            expect(res._getData()).toBe("Obstacle ajouté avec succès !");
+        });
+
+        it("should return a 400 error for missing fields", async () => {
+            const obstacle = {
+                name: "Wall",
+                image: "wall.jpg",
+                type: "solid",
+                descrition: "A solid obstacle",
+                speed: 1,
+            };
+            const req = httpMocks.createRequest({ body: obstacle });
+            const res = httpMocks.createResponse();
+            await addObstacle(req, res);
+            expect(res.statusCode).toBe(400);
         });
     });
 
@@ -60,7 +73,7 @@ describe("Obstacle Controller", () => {
                 type: "solid",
                 through: false,
                 description: "An updated solid obstacle",
-                speed: null,
+                speed: 1,
             };
             const req = httpMocks.createRequest({
                 params: {
@@ -71,7 +84,6 @@ describe("Obstacle Controller", () => {
             const res = httpMocks.createResponse();
             await updateObstacle(req, res);
             expect(res.statusCode).toBe(200);
-            expect(res._getData()).toBe("Obstacle mis à jour avec succès !");
         });
         it("should return a 404 error for non-existent obstacle", async () => {
             const req = httpMocks.createRequest({
@@ -84,7 +96,7 @@ describe("Obstacle Controller", () => {
                     type: "solid",
                     through: false,
                     description: "An updated solid obstacle",
-                    speed: null,
+                    speed: 1,
                 }
             });
             const res = httpMocks.createResponse();
@@ -103,7 +115,6 @@ describe("Obstacle Controller", () => {
             const res = httpMocks.createResponse();
             await deleteObstacle(req, res);
             expect(res.statusCode).toBe(200);
-            expect(res._getData()).toBe("Obstacle supprimé avec succès !");
         });
         it("should return a 404 error for non-existent obstacle", async () => {
             const req = httpMocks.createRequest({

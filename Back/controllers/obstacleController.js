@@ -25,9 +25,13 @@ async function getObstacleById(req, res) {
 }
 
 async function addObstacle(req, res) {
-  const { name, image, type, through,descrition, speed } = req.body;
+  console.log(req.body);
+  if (!req.body.name || !req.body.image || !req.body.type || req.body.through == null || req.body.through == undefined || !req.body.descrition || !req.body.speed) {
+    return res.status(400).send('Champs manquants');
+  }
+  const { name, image, type, through, descrition, speed } = req.body;
   try {
-    const newObstacle = await Obstacle.create({ name, image, type, through,descrition, speed });
+    const newObstacle = await Obstacle.create({ name, image, type, through, descrition, speed });
     res.status(200).json(newObstacle);
   } catch (error) {
     console.error('Erreur lors de l\'ajout de l\'obstacle :', error);

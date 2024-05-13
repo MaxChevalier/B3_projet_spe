@@ -36,10 +36,6 @@ Level.init({
   defaultObstacleId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: {
-      model: 'Obstacle',
-      key: 'id'
-    }
   },
   defaultLayout: {
     type: DataTypes.JSON,
@@ -50,6 +46,5 @@ Level.init({
   modelName: 'Level',
   timestamps: true
 });
-Level.belongsTo(Obstacle, { as: 'defaultObstacle' });
 
 module.exports = Level;

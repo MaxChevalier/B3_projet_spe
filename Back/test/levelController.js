@@ -9,9 +9,10 @@ describe("Level Controller", () => {
                 creator: "John Doe",
                 creation_date: "2024-05-12",
                 modification_date: "2024-05-12",
-                size: 10,
-                obstacles: ["Wall", "Pit"],
-                defaultCell: "Empty",
+                size_x: 10,
+                size_y: 10,
+                obstacles: {nb : 10, obstacles: 1},
+                defaultObstacleId: 1,
                 defaultLayout: "Grid"
             };
             const req = httpMocks.createRequest({ body: level });
@@ -60,9 +61,10 @@ describe("Level Controller", () => {
                 creator: "Jane Doe",
                 creation_date: "2024-05-15",
                 modification_date: "2024-05-15",
-                size: 15,
-                obstacles: ["Wall", "Pit", "Water"],
-                defaultCell: "Obstacle",
+                size_x: 15,
+                size_y: 15,
+                obstacles: {nb : 10, obstacles: 1},
+                defaultObstacleId: 1,
                 defaultLayout: "Random"
             };
             const req = httpMocks.createRequest({
@@ -85,9 +87,10 @@ describe("Level Controller", () => {
                     creator: "Jane Doe",
                     creation_date: "2024-05-15",
                     modification_date: "2024-05-15",
-                    size: 15,
-                    obstacles: ["Wall", "Pit", "Water"],
-                    defaultCell: "Obstacle",
+                    size_x: 15,
+                    size_y: 15,
+                    obstacles: {nb : 10, obstacles: 1},
+                    defaultObstacleId: 1,
                     defaultLayout: "Random"
                 }
             });

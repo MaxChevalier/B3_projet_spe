@@ -1,3 +1,4 @@
+console.log = () => { }
 
 beforeAll(async () => {
     const fs = require('fs');
@@ -15,3 +16,6 @@ beforeAll(async () => {
 });
 
 require("./userController");
+require("./obstacleController");
+require("./levelController");
+require("./testController");
