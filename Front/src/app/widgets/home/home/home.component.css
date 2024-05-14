@@ -1,0 +1,61 @@
+/* Style des boutons */
+button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Style de la zone de profil */
+.profile-link {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+.profile-link img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #007bff;
+  transition: border-color 0.3s ease;
+}
+
+.profile-link img:hover {
+  border-color: #0056b3;
+}
+
+/* Style du bouton de déconnexion */
+.logout-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+}
+
+/* Style du bouton de la liste */
+.list-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+/* Style général */
+.home-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.buttons-container {
+  margin-bottom: 20px;
+}

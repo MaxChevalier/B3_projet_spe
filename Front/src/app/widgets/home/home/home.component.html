@@ -1,0 +1,15 @@
+<div class="home-container">
+    <h2>Bienvenue sur la page de création</h2>
+    <div class="buttons-container">
+      <button (click)="openLevel()">Ouvrir un niveau</button>
+    </div>
+    <div class="profile-link" (click)="profileLink()">
+        <img src="assets/profileIcon.png" alt="Profil utilisateur"/>
+    </div>
+    <div class="logout-button">
+      <button (click)="logout()">Déconnexion</button>
+    <div class="list-button">
+      <button (click)="Guid()">Liste des éléments</button>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
