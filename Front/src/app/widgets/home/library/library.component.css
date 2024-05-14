@@ -1,0 +1,40 @@
+/* Styles pour le conteneur principal */
+.container {
+    margin-top: 20px;
+  }
+  
+  /* Styles pour les boutons de navigation */
+  .btn {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+  
+  /* Styles pour la section des cartes */
+  .card-deck {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .card {
+    width: 300px;
+    margin-bottom: 20px;
+  }
+  
+  /* Styles pour les images des cartes */
+  .card-img-top {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }
+  
+  /* Styles pour le texte des cartes */
+  .card-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .card-text {
+    font-size: 16px;
+  }
