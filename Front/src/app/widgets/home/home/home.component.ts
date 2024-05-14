@@ -26,7 +26,7 @@ export class HomeComponent {
   }
 
   openLevel() {
-    this.router.navigate(['/open-level']);
+    this.router.navigate(['/level-selector']);
   }
 
   Guid() {

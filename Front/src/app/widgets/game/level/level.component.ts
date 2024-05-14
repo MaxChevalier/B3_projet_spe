@@ -7,6 +7,8 @@ import { Cell } from '../../../interfaces/cell';
 import { NgIf, CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { LevelServiceService } from '../../../service/levelService/level-service.service';
+import { SubscriberController } from '../../../scripts/subscriberController';
 
 @Component({
 	selector: 'app-level',
@@ -21,7 +23,7 @@ import { Title } from '@angular/platform-browser';
 	templateUrl: './level.component.html',
 	styleUrl: './level.component.css'
 })
-export class LevelComponent {
+export class LevelComponent extends SubscriberController {
 
 	heroSpeed: number = 250;
 	turns: number = 0;
@@ -47,7 +49,8 @@ export class LevelComponent {
 	@ViewChild(MapComponent) mapComponent: MapComponent | undefined;
 	@ViewChild(CellSelectorComponent) cellSelectorComponent: CellSelectorComponent | undefined;
 
-	constructor(private route: ActivatedRoute, private titleService: Title) {
+	constructor(private route: ActivatedRoute, private titleService: Title, private _levelService: LevelServiceService) {
+		super();
 		let level = history.state.level;
 		if (level) {
 			this.cellsType = level.obstacles;
@@ -98,9 +101,16 @@ export class LevelComponent {
 			});
 			this.setTimeout(() => {
 				this.heroComponent?.updateAnimation('eat');
-				// TODO: Save test in database
-				// score save in this.turns
-				// id_level in this.id
+				this.subscription["$SetTestLevel"] = this._levelService.setTestLevel({ id_level: this.id, date: Date.now(), score: this.turns }, localStorage.getItem('token')).subscribe(
+					{
+						next: (res) => {
+							console.log(res);
+						},
+						error: (err) => {
+							console.error(err);
+						}
+					}
+				);
 			}, this.heroSpeed * index);
 		}
 	}

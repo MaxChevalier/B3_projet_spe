@@ -12,7 +12,7 @@ export class LevelServiceService {
   private apiRoutes = {
     "obstacle": "http://localhost:3000/api/obstacles/",
     "level": "http://localhost:3000/api/levels/",
-    "test": "http://localhost:3000/api/levels/test/"
+    "test": "http://localhost:3000/api/tests"
   }
 
   constructor(private http: HttpClient) { }
@@ -39,6 +39,7 @@ export class LevelServiceService {
 
               // Retourner le niveau adapté
               return {
+                id: level.id,
                 name: level.name,
                 creator: level.creator,
                 creation_date: new Date(level.creation_date),
@@ -56,7 +57,7 @@ export class LevelServiceService {
     );
   }
 
-  setTestLevel(test: { id_level: number, date:number, score:number }, token: string): Observable<any>{
+  setTestLevel(test: { id_level: number, date:number, score:number }, token: string|null): Observable<any>{
     let headers = new HttpHeaders();
     if (token) {
       headers = headers.set('authorization', `${token}`);

@@ -1,6 +1,7 @@
 import { Cell } from "./cell";
 
 export interface Level {
+    id: number;
     name: string;
     creator: string;
     creation_date: Date;
