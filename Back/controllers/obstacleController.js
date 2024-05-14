@@ -60,13 +60,13 @@ async function addObstacle(req, res) {
 
 async function updateObstacle(req, res) {
   const obstacleId = req.params.id;
-  const { name, image, type, through,descrition, speed } = req.body;
+  const { name, image, type, through, description, speed } = req.body;
   try {
     const obstacle = await Obstacle.findByPk(obstacleId);
     if (!obstacle) {
       return res.status(404).send('Obstacle non trouvé');
     }
-    await obstacle.update({ name, image, type, through,descrition, speed });
+    await obstacle.update({ name, image, type, through, description, speed });
     return res.status(200).json(obstacle);
   } catch (error) {
     console.error('Erreur lors de la mise à jour de l\'obstacle :', error);
